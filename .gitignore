@@ -1,8 +1,81 @@
+# Private data and generated experiment outputs
 /Dataset/
 /Output/
-/assets/
 /paper/
-desktop.ini
+/design/
+/assets/
+
+# Local manuscript-editing utilities (not experiment code)
+/response_text_update.py
+/remove_response_label.py
+/results_and_analysis.ipynb
+# Publish only the reviewed README visuals and their aggregate provenance
+/readme_assets/*
+!/readme_assets/twitter_preprocessing_examples.png
+!/readme_assets/youtube_preprocessing_examples.png
+!/readme_assets/in_domain_family_means.png
+!/readme_assets/README.md
+!/readme_assets/results_summary.json
+
+# Evaluation notebooks are self-contained; keep builder sources and tests private
+/evaluation_support/
+
+/scripts/
+
+# Generated model/data bundles and caches
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.pkl
+*.pickle
+*.joblib
+*.h5
+*.hdf5
+*.onnx
+*.parquet
+*.arrow
+*.zip
+*.7z
+*.tar
+*.tar.gz
+.cache/
+wandb/
+mlruns/
+
+# Python
 __pycache__/
 *.py[cod]
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments and local configuration
+.venv/
+venv/
+env/
+.env
+.env.*
+!.env.example
+
+# Jupyter
 .ipynb_checkpoints/
+*.rebuilt.ipynb
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files
+*.log
+*.tmp
+*.bak
+~$*
+
+/.githooks/

@@ -13,7 +13,7 @@ from sklearn.metrics import precision_recall_fscore_support
 
 ROOT = Path(__file__).resolve().parent
 OUTPUT_DIR = ROOT / "Output" / "hypothesis_tests"
-NOTEBOOK_PATH = ROOT / "results_and_analysis.ipynb"
+NOTEBOOK_PATH = OUTPUT_DIR / "results_and_analysis.ipynb"
 
 PLATFORMS = ("twitter", "youtube")
 PREPROCESSING_ORDER = ("original", "manual", "deepfake_aware")

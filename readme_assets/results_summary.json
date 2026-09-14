@@ -1,0 +1,85 @@
+{
+  "source": "Output/hypothesis_tests/in_domain_exact_model_overview.csv",
+  "source_sha256": "b55c43efea13d848b44fe4715e4ffc418cd83afb667ed530423e7e6801f5b840",
+  "metric": "Macro-F1, mean across configurations in each family",
+  "family_configuration_counts": {
+    "ML": 9,
+    "Sequence": 6,
+    "Arabic transformers": 3
+  },
+  "scope": "in-domain; single seed; no uncertainty intervals supplied for these means",
+  "records": [
+    {
+      "platform": "twitter",
+      "preprocessing": "deepfake_aware",
+      "ml_mean": 0.9547834152230076,
+      "sequence_mean": 0.9735985515635556,
+      "transformer_mean": 0.9857425655785248
+    },
+    {
+      "platform": "twitter",
+      "preprocessing": "manual",
+      "ml_mean": 0.9093124422051811,
+      "sequence_mean": 0.934379801560903,
+      "transformer_mean": 0.959582905296176
+    },
+    {
+      "platform": "twitter",
+      "preprocessing": "original",
+      "ml_mean": 0.9580541301824922,
+      "sequence_mean": 0.9757196263631324,
+      "transformer_mean": 0.9905729931359196
+    },
+    {
+      "platform": "youtube",
+      "preprocessing": "deepfake_aware",
+      "ml_mean": 0.8645160757232379,
+      "sequence_mean": 0.8887845939056929,
+      "transformer_mean": 0.9318403830426608
+    },
+    {
+      "platform": "youtube",
+      "preprocessing": "manual",
+      "ml_mean": 0.858670870043134,
+      "sequence_mean": 0.8826145505361631,
+      "transformer_mean": 0.9302518706181084
+    },
+    {
+      "platform": "youtube",
+      "preprocessing": "original",
+      "ml_mean": 0.8677703188885583,
+      "sequence_mean": 0.8897943270681227,
+      "transformer_mean": 0.939036669769976
+    }
+  ],
+  "synthetic_preprocessing_examples": {
+    "twitter": {
+      "Original": [
+        "عااااجل!!! شَاهِد العرض 2025 https://example.com @demo #تقنية AI 😊",
+        "إلى الجميع: هــذا جمييييل ١٢٣!!"
+      ],
+      "Manual": [
+        "عاجل. شاهد العرض 2025",
+        "الي الجميع هذا جميل ١٢٣."
+      ],
+      "Deepfake-aware": [
+        "عااجل. شَاهِد العرض <NUMBER> <URL> <MENTION> <HASHTAG> <LATIN>",
+        "الي الجميع هذا جمييل <NUMBER>."
+      ]
+    },
+    "youtube": {
+      "Original": [
+        "عااااجل!!! شَاهِد العرض 2025 https://example.com @demo #تقنية AI 😊",
+        "إلى الجميع: هــذا جمييييل ١٢٣!!"
+      ],
+      "Manual": [
+        "عاجل. شاهد العرض 2025",
+        "الي الجميع هذا جميل ١٢٣."
+      ],
+      "Deepfake-aware": [
+        "عااجل. شاهد العرض <NUMBER>",
+        "إلى الجميع هذا جمييل <NUMBER>."
+      ]
+    }
+  }
+}
