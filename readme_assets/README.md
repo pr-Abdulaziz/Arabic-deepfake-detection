@@ -1,26 +1,21 @@
-# README visuals and provenance
+# Table provenance
 
-Only these reviewed assets are included in the public repository. Raw datasets, private reports, and experimental exports remain excluded.
+The comparison tables are displayed directly in the root [README](../README.md) and the [notebook guide](../NOTEBOOK_GUIDE.md). Superseded PNG previews are kept locally and excluded from routine publication.
 
-| Asset | Content and source |
-| --- | --- |
-| `twitter_preprocessing_examples.png` | Two synthetic Arabic inputs and their Original/Manual/Deepfake-aware outputs from the Twitter/X preprocessing functions |
-| `youtube_preprocessing_examples.png` | The same two inputs processed by the distinct YouTube functions |
-| `in_domain_family_means.png` | Aggregate in-domain Macro-F1 means from the existing experiment export |
-| [results_summary.json](results_summary.json) | Full-precision aggregate values, source CSV SHA-256, configuration counts, and the synthetic input/output strings |
+## Preprocessing comparisons
 
-## Text examples
+The tables show two synthetic Arabic inputs under Original, Manual and Deepfake-aware preprocessing for each platform. They are not dataset quotations or detector predictions. The exact strings are also preserved in [results_summary.json](results_summary.json).
 
-The inputs are invented demonstrations—not copied dataset records. Outputs were produced using preprocessing functions extracted from cells 35 and 36 (one-based positions including Markdown cells) of the platform training notebooks, with their transitive dependencies. Odd-character patterns used the local training partitions after exact-text test-overlap removal. No models were trained or used to predict these examples.
+Outputs were produced using functions extracted from cells 35 and 36 (one-based positions including Markdown cells) of the platform training notebooks, together with their dependencies. Odd-character patterns used the local training partitions after exact-text test-overlap removal. No model training or prediction was performed for these examples.
 
-The images preserve the exact strings in the [notebook guide](../NOTEBOOK_GUIDE.md). Right-to-left text is browser-shaped; Latin tokens are directionally isolated for readability. Typed markers show the presence of structural elements, not their original contents. The illustrations do not establish a classification improvement, token-count reduction, or causal mechanism.
+Typed markers show the presence of structural elements, not their original contents. The examples illustrate transformations, not proof of improved classification performance.
 
 ## Measured results
 
-The result image uses `Output/hypothesis_tests/in_domain_exact_model_overview.csv`. The public JSON contains only its platform/view identifiers and `ml_mean`, `sequence_mean`, and `transformer_mean` values. The source CSV itself remains private.
+The result tables use `Output/hypothesis_tests/in_domain_exact_model_overview.csv`. The public JSON retains the source SHA-256 and full-precision exported values for `ml_mean`, `sequence_mean`, and `transformer_mean`; the source CSV remains private.
 
-There are 18 plotted estimates: 2 platforms × 3 views × 3 model families. Means summarize 9 machine-learning, 6 sequence-model and 3 Arabic-transformer configurations. The supplementary multilingual models are not included. Labels round the values to four decimals; JSON retains the exported precision.
+The tables report 18 estimates: two platforms × three preprocessing views × three model families. Family means cover nine machine-learning, six sequence-model and three Arabic-transformer configurations. Supplementary multilingual models are not included.
 
-Both panels use the same focused Macro-F1 scale. These are descriptive single-seed means, not independently selected family winners. No confidence interval fields are supplied for these family means, so no uncertainty bars are invented. Paired-difference intervals from other analyses must not be reused as intervals around these absolute means.
+Macro-F1 values are rounded to four decimals. Bold identifies the largest value in a row. Changes are calculated from unrounded values as **100 × (variant − Original)** and reported to two decimals in percentage points.
 
-The images were visually inspected for Arabic shaping, labels and clipping. No fresh model training was performed to create them.
+These are descriptive single-seed means, not independently selected family winners. No confidence intervals are supplied for these means. Paired-difference intervals from other analyses must not be used as intervals around the absolute means. Full model training was not rerun for this documentation update.

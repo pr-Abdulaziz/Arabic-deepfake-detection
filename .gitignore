@@ -9,11 +9,8 @@
 /response_text_update.py
 /remove_response_label.py
 /results_and_analysis.ipynb
-# Publish only the reviewed README visuals and their aggregate provenance
+# Publish only table provenance; keep superseded README images local
 /readme_assets/*
-!/readme_assets/twitter_preprocessing_examples.png
-!/readme_assets/youtube_preprocessing_examples.png
-!/readme_assets/in_domain_family_means.png
 !/readme_assets/README.md
 !/readme_assets/results_summary.json
 

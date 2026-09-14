@@ -38,8 +38,6 @@ They demonstrate **what changes**, not that a view improves accuracy. The two pl
 
 ### Twitter/X
 
-![Two Twitter/X examples compared across all three preprocessing views](readme_assets/twitter_preprocessing_examples.png)
-
 | View | Example 1 | Example 2 |
 | --- | --- | --- |
 | Original | `عااااجل!!! شَاهِد العرض 2025 https://example.com @demo #تقنية AI 😊` | `إلى الجميع: هــذا جمييييل ١٢٣!!` |
@@ -47,8 +45,6 @@ They demonstrate **what changes**, not that a view improves accuracy. The two pl
 | Deepfake-aware | `عااجل. شَاهِد العرض <NUMBER> <URL> <MENTION> <HASHTAG> <LATIN>` | `الي الجميع هذا جمييل <NUMBER>.` |
 
 ### YouTube
-
-![Two YouTube examples compared across all three preprocessing views](readme_assets/youtube_preprocessing_examples.png)
 
 | View | Example 1 | Example 2 |
 | --- | --- | --- |
@@ -65,7 +61,7 @@ They demonstrate **what changes**, not that a view improves accuracy. The two pl
 
 ## Complete code-cell inventory
 
-For the measured model-level comparison, see the [in-domain results image](README.md#in-domain-results). Those results are separate from these synthetic text demonstrations.
+For the measured model-family comparison, see the [in-domain results tables](README.md#in-domain-results). Those results are separate from these synthetic text demonstrations.
 
 Each expandable table covers every code cell in that notebook. Purpose labels come from the notebook's own nearby headings or leading comments; definitions and variable names are extracted from source, not inferred from saved outputs. Consult the cell itself for full parameters and control flow. Markdown cells are represented through the section labels rather than duplicated verbatim here.
 

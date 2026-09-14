@@ -18,27 +18,53 @@ Cross-platform evaluation applies a source-platform model to the other platform 
 
 ## Preprocessing examples
 
-Each image shows **two synthetic Arabic examples**, with the same input processed under Original, Manual, and Deepfake-aware views. The displayed outputs come from the actual platform-specific functions; these are illustrations, not quotations from the restricted dataset or model predictions.
+Each table shows **two synthetic Arabic examples**, with the same input processed under Original, Manual, and Deepfake-aware views. Outputs come from the actual platform-specific functions; these are illustrations, not quotations from the restricted dataset or model predictions.
 
 ### Twitter/X
 
-![Two Twitter/X examples under Original, Manual and Deepfake-aware preprocessing](readme_assets/twitter_preprocessing_examples.png)
+| Preprocessing view | Example 1 | Example 2 |
+| --- | --- | --- |
+| Original | `عااااجل!!! شَاهِد العرض 2025 https://example.com @demo #تقنية AI 😊` | `إلى الجميع: هــذا جمييييل ١٢٣!!` |
+| Manual | `عاجل. شاهد العرض 2025` | `الي الجميع هذا جميل ١٢٣.` |
+| Deepfake-aware | `عااجل. شَاهِد العرض <NUMBER> <URL> <MENTION> <HASHTAG> <LATIN>` | `الي الجميع هذا جمييل <NUMBER>.` |
 
-Manual preprocessing removes social-media elements and normalizes spelling. Twitter/X Deepfake-aware preprocessing represents structural elements with typed markers and retains different surface cues, as shown above.
+Manual preprocessing removes social-media elements and normalizes spelling. Twitter/X Deepfake-aware preprocessing replaces structural elements with typed markers and retains different surface cues.
 
 ### YouTube
 
-![Two YouTube examples under Original, Manual and Deepfake-aware preprocessing](readme_assets/youtube_preprocessing_examples.png)
+| Preprocessing view | Example 1 | Example 2 |
+| --- | --- | --- |
+| Original | `عااااجل!!! شَاهِد العرض 2025 https://example.com @demo #تقنية AI 😊` | `إلى الجميع: هــذا جمييييل ١٢٣!!` |
+| Manual | `عاجل. شاهد العرض 2025` | `الي الجميع هذا جميل ١٢٣.` |
+| Deepfake-aware | `عااجل. شاهد العرض <NUMBER>` | `إلى الجميع هذا جمييل <NUMBER>.` |
 
-YouTube Deepfake-aware preprocessing uses a number marker while removing URLs, mentions, hashtags and Latin spans; it differs from the Twitter/X implementation. Copyable text and function locations are in the [notebook guide](NOTEBOOK_GUIDE.md#preprocessing-examples-from-the-actual-functions).
+YouTube Deepfake-aware preprocessing uses a number marker while removing URLs, mentions, hashtags and Latin spans. Unlike Twitter/X, it omits explicit alef/yeh/hamza normalization.
+
+Function locations and further explanation are in the [notebook guide](NOTEBOOK_GUIDE.md#preprocessing-examples-from-the-actual-functions).
 
 ## In-domain results
 
-![Mean in-domain Macro-F1 by preprocessing view and model family on Twitter/X and YouTube](readme_assets/in_domain_family_means.png)
+Mean Macro-F1 across configurations in each model family. **Bold** identifies the highest mean within each row. Δ is the change from Original in **percentage points**, calculated before rounding; negative values indicate a reduction.
 
-The Original view has the highest family mean in these experiments. Deepfake-aware preprocessing partly recovers the Manual-view reduction but does not exceed Original in the displayed family means. These are averages across 9 machine-learning, 6 sequence-model and 3 Arabic-transformer configurations—not best-model scores or results on the two illustrative texts. The shared horizontal scale is focused; no uncertainty intervals are supplied for these descriptive means. Single-seed results do not measure training-run variability.
+### Twitter/X
 
-See the [asset notes and exact aggregate values](readme_assets/README.md) for provenance. The text examples illustrate transformations; measured classification results, rather than visual cleanliness, determine effectiveness.
+| Model family (configurations) | Original | Manual | Manual Δ (pp) | Deepfake-aware | DF-aware Δ (pp) |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Machine learning (9) | **0.9581** | 0.9093 | −4.87 | 0.9548 | −0.33 |
+| Sequence models (6) | **0.9757** | 0.9344 | −4.13 | 0.9736 | −0.21 |
+| Arabic transformers (3) | **0.9906** | 0.9596 | −3.10 | 0.9857 | −0.48 |
+
+### YouTube
+
+| Model family (configurations) | Original | Manual | Manual Δ (pp) | Deepfake-aware | DF-aware Δ (pp) |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Machine learning (9) | **0.8678** | 0.8587 | −0.91 | 0.8645 | −0.33 |
+| Sequence models (6) | **0.8898** | 0.8826 | −0.72 | 0.8888 | −0.10 |
+| Arabic transformers (3) | **0.9390** | 0.9303 | −0.88 | 0.9318 | −0.72 |
+
+Original has the highest family mean in these experiments. Deepfake-aware preprocessing partly recovers the Manual-view reduction but does not exceed Original in the displayed means. These are averages across configurations—not best-model scores or results on the illustrative texts. No uncertainty intervals are supplied for these descriptive means; single-seed results do not measure training-run variability.
+
+See the [table provenance and exact aggregate values](readme_assets/README.md). The examples show text transformations; measured classification results, rather than visual cleanliness, determine effectiveness.
 
 ## Repository guide
 
