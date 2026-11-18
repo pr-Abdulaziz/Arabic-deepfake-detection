@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arabic Deepfake Text Detection on Social Media</title>
+<meta name="description" content="A controlled cross-platform study of Arabic deepfake text detection on Twitter/X and YouTube under three preprocessing views, comparing machine learning, sequence and transformer models in-domain and under cross-platform transfer.">
+<meta name="copyright" content="Copyright (c) 2026 Abdulaziz Alqahtani, Amal Sunba and Tarek Helmy. All rights reserved.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="hero">
+  <p class="eyebrow">Arabic machine-generated text detection</p>
+  <h1>Arabic Deepfake Text Detection on Social Media: Controlled Preprocessing and Cross-Platform Transferability</h1>
+  <p class="authors">
+    Abdulaziz Alqahtani<sup>1,*</sup>, Amal Sunba<sup>2</sup>, Tarek Helmy<sup>1</sup>
+  </p>
+  <div class="affil">
+    <span><sup>1</sup> Information and Computer Science Department, Interdisciplinary Research Center for Intelligent Secure Systems, King Fahd University of Petroleum and Minerals, Saudi Arabia</span>
+    <span><sup>2</sup> Department of Computer Sciences, College of Computer and Information Sciences, Princess Nourah Bint Abdulrahman University, Riyadh, Saudi Arabia</span>
+    <span><sup>*</sup> Corresponding author</span>
+  </div>
+
+  <div class="links">
+    <span class="btn btn-arxiv is-disabled" aria-disabled="true">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5l14 14M19 5L5 19"/></svg>
+      arXiv <span class="soon">soon</span>
+    </span>
+
+    <a class="btn btn-code" href="https://github.com/pr-Abdulaziz/Arabic-deepfake-detection">
+      <svg class="fill" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+      Code
+    </a>
+
+    <span class="btn btn-weights is-disabled" aria-disabled="true">
+      <img class="hf" src="assets/hf-logo.svg" alt="" aria-hidden="true">
+      Checkpoints <span class="soon">soon</span>
+    </span>
+
+    <a class="btn btn-docs" href="https://github.com/pr-Abdulaziz/Arabic-deepfake-detection#readme">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      Reproduce
+    </a>
+  </div>
+
+  <nav class="toc">
+    <a href="#abstract">Abstract</a>
+    <a href="#introduction">Introduction</a>
+    <a href="#methodology">Methodology</a>
+    <a href="#experiments">Experimental setup</a>
+    <a href="#results">Results</a>
+    <a href="#citation">Citation</a>
+  </nav>
+</header>
+
+<main>
+
+<section id="abstract">
+  <h2>Abstract</h2>
+  <p>The rapid growth of large language models has increased the spread of AI-generated deceptive Arabic text on social media, creating new challenges for robust detection across platforms. This paper addresses that problem through a controlled cross-platform study of Arabic deepfake text detection on Twitter/X and YouTube, under three controlled preprocessing views applied after initial dataset cleaning. The study uses platform-paired datasets of real and synthetic Arabic texts, compares machine learning, deep learning, and transformer-based models under both in-domain and cross-platform transfer evaluation. The results show that fine-tuned Arabic transformers were the strongest models overall, reaching up to 0.9912 Macro-F1 on Twitter and 0.9409 on YouTube in in-domain testing. Preprocessing affected performance, but its impact differed across platforms and model families: the original view text remained strongest overall, manual cleaning reduced performance, whereas deepfake-aware preprocessing offered a better, but still inconsistent, compromise. Cross-platform results were consistently lower than in-domain results, with the best transfer scores reaching 0.8364 from Twitter to YouTube and 0.9433 from YouTube to Twitter. Overall, the findings show that Arabic deepfake text detection is feasible, but robust cross-platform generalization remains an open challenge.</p>
+  <p class="keywords"><b>Keywords:</b> Arabic deepfake detection, cross-platform detection, text preprocessing, social media, machine learning, deep learning, transformers</p>
+</section>
+
+<section id="introduction">
+  <h2>1. Introduction</h2>
+  <p>Deepfakes are synthetic media generated by AI tools to mimic real content, and the phenomenon has spread to textual content. Recent large language models have substantially improved the fluency and coherence of generated text, so machine-generated material can closely resemble human writing. Arabic remains understudied in this literature even though it is widely used online, and most Arabic work has addressed fake news and rumour classification rather than explicitly identifying machine-generated text.</p>
+  <p>Detecting AI-generated Arabic text is difficult because Arabic has many varieties and spellings, its extensive use of prefixes, suffixes and clitics increases vocabulary sparsity, and optional diacritics, dialect mixing, code-switching and informal writing add noise. Twitter/X and YouTube are complementary but structurally distinct settings: short, fast-moving posts against longer, more contextualized comment threads. This study provides a comparative, controlled evaluation across both platforms, treating preprocessing as an explicit experimental variable rather than a fixed preliminary step.</p>
+
+  <h3>Objectives</h3>
+  <ol class="objectives">
+    <li>Compare how well different modelling methods work for Arabic deepfake text detection on Twitter/X and YouTube, across machine learning, sequence and transformer families, to establish a performance hierarchy within one evaluation setting.</li>
+    <li>Examine how word representation and preprocessing choices affect detection performance, to determine whether preprocessing improves performance or removes useful linguistic and platform cues.</li>
+    <li>Assess cross-platform robustness by examining transfer between Twitter/X and YouTube without retraining or target-domain adaptation.</li>
+  </ol>
+
+  <div class="two-col">
+    <div>
+      <h3>Research questions</h3>
+      <ul class="qa">
+        <li><b>RQ1</b> Under in-domain evaluation, which implemented ML, sequence and transformer configurations perform best on Twitter and on YouTube?</li>
+        <li><b>RQ2</b> How do the preprocessing variants affect in-domain performance across representation strategies and model families?</li>
+        <li><b>RQ3</b> How robust are source-trained configurations under cross-platform transfer in both directions without retraining?</li>
+        <li><b>RQ4</b> Where do errors concentrate across deceptive types and platform-specific metadata categories?</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Hypotheses</h3>
+      <ul class="qa">
+        <li><b>H1</b> Fine-tuned contextual Arabic transformers will produce the highest performance on both platforms.</li>
+        <li><b>H2</b> Preprocessing effects will be significant across representation strategies and model families.</li>
+        <li><b>H3</b> The detection model performs better when evaluated on the same domain as its training data.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="methodology">
+  <h2>2. Methodology</h2>
+
+  <h3>2.1 Dataset</h3>
+  <p>Two platform-paired corpora of real and synthetic Arabic texts were used, one from Twitter/X and one from YouTube. Each generated text is a prompt-based deceptive rewrite of a human source text, produced under one of six deception strategies. The two corpora were constructed independently, at different times and with different generators, so platform and generator vary together.</p>
+
+  <div class="table-wrap">
+    <table>
+      <caption>Table 1. Deceptive sub-types and corresponding sample count across Twitter and YouTube.</caption>
+      <thead>
+        <tr><th>Deceptive type</th><th>Description</th><th class="num">Twitter</th><th class="num">YouTube</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Exaggeration</td><td>Rewrites the text by amplifying claims or emotions while preserving the main topic.</td><td class="num">2,289</td><td class="num">2,543</td></tr>
+        <tr><td>Omission</td><td>Removes key contextual details, resulting in a misleading interpretation.</td><td class="num">2,286</td><td class="num">2,403</td></tr>
+        <tr><td>Contradiction</td><td>Introduces statements that conflict with the original meaning while remaining plausible.</td><td class="num">2,299</td><td class="num">2,406</td></tr>
+        <tr><td>Satirical tone</td><td>Rewrites the text in an ironic or mocking style while keeping misleading implications.</td><td class="num">2,376</td><td class="num">2,441</td></tr>
+        <tr><td>Clickbait phrasing</td><td>Reformulates the text using attention-grabbing, emotionally charged wording.</td><td class="num">2,364</td><td class="num">2,421</td></tr>
+        <tr><td>Mixed truths</td><td>Combines correct information with misleading or fabricated details.</td><td class="num">2,333</td><td class="num">2,423</td></tr>
+        <tr class="group"><td>Total</td><td>Total number of generated deceptive examples across all sub-types.</td><td class="num">13,947</td><td class="num">14,637</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>2.2 Preprocessing views</h3>
+  <p>Preprocessing is the controlled experimental factor. Each platform's texts are evaluated under three views, applied after the initial corpus cleaning:</p>
+  <ul>
+    <li><b>Original</b> — the already-cleaned corpus, without additional experimental normalization.</li>
+    <li><b>Manual</b> — conventional aggressive normalization: URLs, mentions, hashtags, emojis, diacritics, Latin spans, repeated characters and punctuation are removed or strongly normalized.</li>
+    <li><b>Deepfake-aware</b> — task-oriented normalization that aims to reduce noise while preserving potentially informative surface cues.</li>
+  </ul>
+  <p>The two platforms use different deepfake-aware implementations. On Twitter/X, URL, mention, hashtag, number and Latin spans are replaced with typed markers and diacritics are retained; on YouTube, URL, mention, hashtag and Latin spans are removed, only numbers are replaced, and diacritics are stripped. Platform comparisons therefore combine corpus properties with different transformations.</p>
+
+  <h3>2.3 Model families</h3>
+  <p>Three families are compared under identical splits. Classical machine learning combines LinearSVC, logistic regression and random forest with TF-IDF, Word2Vec-CBOW and FastText representations (nine configurations). Sequence models combine LSTM and Bi-LSTM with randomly initialized, Word2Vec-CBOW and FastText embeddings (six configurations). Transformers fine-tune AraBERTv2, MARBERTv2 and CAMeLBERT, with mBERT and XLM-R added as multilingual comparators in a supplementary in-domain analysis.</p>
+
+  <h3>2.4 Evaluation protocol</h3>
+  <p>In-domain evaluation uses fixed held-out splits per platform. Cross-platform evaluation applies a source-platform model to the other platform's test set without retraining or target-domain adaptation, keeping the source pipeline's preprocessing and tokenization attached to the model.</p>
+
+  <figure>
+    <img src="assets/fig2-workflow.png" alt="Study workflow: Twitter/X and YouTube data pass through three preprocessing alternatives, then shared tokenization and representation, then a detection model, evaluated under in-domain and cross-platform protocols.">
+    <figcaption><b>Figure 2.</b> Study workflow showing the three preprocessing views, modeling branches, and fixed in-domain and cross-platform evaluation settings across Twitter/X and YouTube.</figcaption>
+  </figure>
+</section>
+
+<section id="experiments">
+  <h2>3. Experimental setup</h2>
+  <p>All experiments ran under a fixed evaluation protocol across both platforms and all preprocessing views, using identical held-out test splits and exact-text de-leakage against the test partition before fitting.</p>
+
+  <dl class="settings">
+    <div><dt>Random seed</dt><dd>42 (single seed)</dd></div>
+    <div><dt>Max input length</dt><dd>128</dd></div>
+    <div><dt>ML classifiers</dt><dd>Balanced class weighting, C = 1.0</dd></div>
+    <div><dt>Random forest</dt><dd>200 trees, max depth 30, sqrt features</dd></div>
+    <div><dt>Sequence models</dt><dd>25k vocab, embed 128, hidden 64, batch 64, 5 epochs, AdamW</dd></div>
+    <div><dt>Static embeddings</dt><dd>128 dimensions, 25 epochs</dd></div>
+    <div><dt>Transformers</dt><dd>Batch 64, 5 epochs, LR 2 &times; 10<sup>&minus;5</sup></dd></div>
+    <div><dt>Weight decay</dt><dd>1 &times; 10<sup>&minus;3</sup></dd></div>
+    <div><dt>Warmup ratio</dt><dd>0.1</dd></div>
+    <div><dt>Gradient clipping</dt><dd>1.0</dd></div>
+    <div><dt>Dropout</dt><dd>0.10</dd></div>
+    <div><dt>Checkpoint selection</dt><dd>Validation Macro-F1</dd></div>
+  </dl>
+
+  <h3>3.1 Statistical analysis</h3>
+  <ul>
+    <li>Pairwise model comparisons on the same held-out texts use two-sided exact McNemar tests, with each held-out text as the unit of analysis.</li>
+    <li>Family-level preprocessing comparisons use two-sided Wilcoxon signed-rank tests over matched model configurations: 9 machine-learning, 6 sequence-model and 3 transformer pairs per comparison.</li>
+    <li>Macro-F1 differences are accompanied by percentile bootstrap 95% confidence intervals obtained by resampling the held-out test predictions.</li>
+    <li>P-values are adjusted with the Benjamini&ndash;Hochberg false discovery rate procedure; adjusted values below 0.05 are treated as statistically significant.</li>
+    <li>Repeated Wilcoxon p-values reflect the small number of matched configurations and the discrete nature of the test, so family-level preprocessing tests are interpreted as exploratory alongside the magnitude of the differences.</li>
+  </ul>
+</section>
+
+<section id="results">
+  <h2>4. Results</h2>
+
+  <h3>4.1 In-domain performance</h3>
+  <p>Transformer-based models achieved the highest Macro-F1 on both platforms, followed by sequence models and then machine-learning classifiers. Manual preprocessing produced the clearest decline relative to the original view, while deepfake-aware preprocessing generally reduced that loss without consistently exceeding the original condition.</p>
+
+  <div class="table-wrap">
+    <table>
+      <caption>Table 4. Macro-F1 results by model across text views, with family averages. Bold marks the best family mean per platform.</caption>
+      <thead>
+        <tr><th>Platform</th><th>View</th><th class="num">ML mean</th><th class="num">Sequence mean</th><th class="num">Transformer mean</th><th>Worst model</th><th>Best model</th></tr>
+      </thead>
+      <tbody>
+        <tr class="ours"><td rowspan="3">Twitter/X</td><td>Original</td><td class="num">0.9581</td><td class="num">0.9757</td><td class="num"><b>0.9906</b></td><td>RF&ndash;TFIDF (0.9135)</td><td>CAMeLBERT (0.9912)</td></tr>
+        <tr><td>Manual</td><td class="num">0.9093</td><td class="num">0.9344</td><td class="num">0.9596</td><td>RF&ndash;TFIDF (0.8770)</td><td>MARBERTv2 (0.9625)</td></tr>
+        <tr><td>Deepfake-aware</td><td class="num">0.9548</td><td class="num">0.9736</td><td class="num">0.9857</td><td>RF&ndash;TFIDF (0.9324)</td><td>MARBERTv2 (0.9869)</td></tr>
+        <tr class="ours"><td rowspan="3">YouTube</td><td>Original</td><td class="num">0.8678</td><td class="num">0.8898</td><td class="num"><b>0.9390</b></td><td>RF&ndash;TFIDF (0.8297)</td><td>MARBERTv2 (0.9409)</td></tr>
+        <tr><td>Manual</td><td class="num">0.8587</td><td class="num">0.8826</td><td class="num">0.9303</td><td>RF&ndash;TFIDF (0.8225)</td><td>MARBERTv2 (0.9354)</td></tr>
+        <tr><td>Deepfake-aware</td><td class="num">0.8645</td><td class="num">0.8888</td><td class="num">0.9318</td><td>RF&ndash;TFIDF (0.8250)</td><td>MARBERTv2 (0.9369)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <caption>Table 5. Two-sided exact McNemar comparisons of selected transformers and baseline models using paired held-out predictions.</caption>
+      <thead>
+        <tr><th>Platform</th><th>Family</th><th>Transformer</th><th>Comparison model</th><th class="num">p-value</th><th class="num">p-adjusted</th></tr>
+      </thead>
+      <tbody>
+        <tr><td rowspan="2">Twitter/X</td><td>ML</td><td>CAMeLBERT</td><td>SVM</td><td class="num">1.55 &times; 10<sup>&minus;10</sup></td><td class="num">4.66 &times; 10<sup>&minus;10</sup></td></tr>
+        <tr><td>Sequence</td><td>CAMeLBERT</td><td>Bi-LSTM</td><td class="num">3.0 &times; 10<sup>&minus;4</sup></td><td class="num">5.0 &times; 10<sup>&minus;4</sup></td></tr>
+        <tr><td rowspan="2">YouTube</td><td>ML</td><td>MARBERTv2</td><td>Logistic regression</td><td class="num">1.26 &times; 10<sup>&minus;27</sup></td><td class="num">3.78 &times; 10<sup>&minus;27</sup></td></tr>
+        <tr><td>Sequence</td><td>MARBERTv2</td><td>Bi-LSTM</td><td class="num">2.47 &times; 10<sup>&minus;25</sup></td><td class="num">3.7 &times; 10<sup>&minus;25</sup></td></tr>
+      </tbody>
+    </table>
+    <p class="note">The selected transformers significantly outperformed the strongest machine-learning and sequence baselines in all four comparisons.</p>
+  </div>
+
+  <h3>4.2 Preprocessing effects</h3>
+  <figure>
+    <img src="assets/fig4-preprocessing-effects.png" alt="Four panels of dot-and-interval plots showing Macro-F1 change in percentage points for each configuration under manual and deepfake-aware preprocessing, on Twitter/X and YouTube.">
+    <figcaption><b>Figure 4.</b> Processed-minus-original Macro-F1 changes by platform and view. Colour indicates ML (red) or sequence (green) models; whiskers are paired 95% bootstrap intervals and the dashed line denotes no change.</figcaption>
+  </figure>
+
+  <div class="table-wrap">
+    <table>
+      <caption>Table 6. Two-sided Wilcoxon signed-rank comparisons of preprocessing views against Original, using matched configurations.</caption>
+      <thead>
+        <tr><th>Platform</th><th>Family</th><th>Compare view</th><th class="num">Mean Macro-F1 diff.</th><th class="num">p-value</th><th class="num">p-adjusted</th></tr>
+      </thead>
+      <tbody>
+        <tr><td rowspan="6">Twitter/X</td><td>ML</td><td>Deepfake-aware</td><td class="num">&minus;0.0033</td><td class="num">0.4258</td><td class="num">0.4258</td></tr>
+        <tr><td>ML</td><td>Manual</td><td class="num">&minus;0.0487</td><td class="num">0.0039</td><td class="num"><b>0.0234</b></td></tr>
+        <tr><td>Sequence</td><td>Deepfake-aware</td><td class="num">&minus;0.0021</td><td class="num">0.3125</td><td class="num">0.375</td></tr>
+        <tr><td>Sequence</td><td>Manual</td><td class="num">&minus;0.0413</td><td class="num">0.0312</td><td class="num">0.0938</td></tr>
+        <tr><td>Transformer</td><td>Deepfake-aware</td><td class="num">&minus;0.0048</td><td class="num">0.25</td><td class="num">0.375</td></tr>
+        <tr><td>Transformer</td><td>Manual</td><td class="num">&minus;0.031</td><td class="num">0.25</td><td class="num">0.375</td></tr>
+        <tr><td rowspan="6">YouTube</td><td>ML</td><td>Deepfake-aware</td><td class="num">&minus;0.0033</td><td class="num">0.0117</td><td class="num"><b>0.0352</b></td></tr>
+        <tr><td>ML</td><td>Manual</td><td class="num">&minus;0.0091</td><td class="num">0.0039</td><td class="num"><b>0.0234</b></td></tr>
+        <tr><td>Sequence</td><td>Deepfake-aware</td><td class="num">&minus;0.001</td><td class="num">0.8438</td><td class="num">0.8438</td></tr>
+        <tr><td>Sequence</td><td>Manual</td><td class="num">&minus;0.0072</td><td class="num">0.0625</td><td class="num">0.125</td></tr>
+        <tr><td>Transformer</td><td>Deepfake-aware</td><td class="num">&minus;0.0072</td><td class="num">0.25</td><td class="num">0.3</td></tr>
+        <tr><td>Transformer</td><td>Manual</td><td class="num">&minus;0.0088</td><td class="num">0.25</td><td class="num">0.3</td></tr>
+      </tbody>
+    </table>
+    <p class="note">Bold marks adjusted p-values below 0.05. An identical mean difference of &minus;0.0033 is significant for YouTube machine-learning models but not for Twitter/X, so statistical significance here reflects consistency across matched configurations rather than practical magnitude.</p>
+  </div>
+
+  <h3>4.3 Arabic-specific and multilingual encoders</h3>
+  <figure>
+    <img src="assets/fig5-transformers.png" alt="Dot-and-interval plot of original-view Macro-F1 for mBERT, XLM-R, AraBERTv2, MARBERTv2 and CAMeLBERT-DA on Twitter/X and YouTube, with overlapping confidence intervals.">
+    <figcaption><b>Figure 5.</b> Original-view Macro-F1 and 95% sample-bootstrap intervals. Colour represents the pretraining group: multilingual (red) and Arabic-specific (blue). Panels use independently zoomed axes.</figcaption>
+  </figure>
+  <p>The five encoders span a narrow range in the original view and their intervals overlap substantially on both platforms. Under a single seed these margins do not support a ranking among individual encoders; the multilingual and Arabic-specific groups are best described as comparable. The multilingual models are fine-tuned in-domain comparators, not general-purpose detectors of machine-generated text, and they were not extended to the cross-platform setting.</p>
+
+  <h3>4.4 Error concentration by deception type</h3>
+  <div class="table-wrap">
+    <table>
+      <caption>Table 7. Mean exact-model error rates by deceptive type.</caption>
+      <thead>
+        <tr><th>Deception type</th><th class="num">Twitter mean error (%)</th><th class="num">YouTube mean error (%)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Original (real texts)</td><td class="num">4.3</td><td class="num">10.0</td></tr>
+        <tr><td>Clickbait phrasing</td><td class="num">0.5</td><td class="num">3.8</td></tr>
+        <tr><td>Contradiction</td><td class="num">8.2</td><td class="num">24.7</td></tr>
+        <tr><td>Exaggeration</td><td class="num">1.6</td><td class="num">7.1</td></tr>
+        <tr><td>Mixed truths</td><td class="num">1.9</td><td class="num">13.2</td></tr>
+        <tr class="ours"><td>Omission</td><td class="num">17.7</td><td class="num">24.4</td></tr>
+      </tbody>
+    </table>
+    <p class="note">Omission and contradiction are the most difficult categories on both platforms; clickbait phrasing is the easiest. These categories identify concentrations of detection errors; they do not establish whether models understand deception or assess factual accuracy.</p>
+  </div>
+
+  <h3>4.5 Cross-platform transfer</h3>
+  <div class="table-wrap">
+    <table class="compact">
+      <caption>Table 8. Cross-platform Macro-F1 for transfer between Twitter and YouTube, without target-domain retraining. Bold marks the highest value per direction.</caption>
+      <thead>
+        <tr>
+          <th rowspan="2">Family</th><th rowspan="2">Model</th><th rowspan="2">Embedding</th>
+          <th colspan="3" class="num">Twitter &rarr; YouTube</th><th colspan="3" class="num">YouTube &rarr; Twitter</th>
+        </tr>
+        <tr>
+          <th class="num">Original</th><th class="num">Manual</th><th class="num">DF-aware</th>
+          <th class="num">Original</th><th class="num">Manual</th><th class="num">DF-aware</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td rowspan="9">ML</td><td>SVM</td><td>TF-IDF</td><td class="num">0.6405</td><td class="num">0.7746</td><td class="num">0.5168</td><td class="num">0.7453</td><td class="num">0.7584</td><td class="num">0.7552</td></tr>
+        <tr><td>Logistic regression</td><td>TF-IDF</td><td class="num">0.6823</td><td class="num">0.7861</td><td class="num">0.5491</td><td class="num">0.7290</td><td class="num">0.7472</td><td class="num">0.7313</td></tr>
+        <tr><td>Random forest</td><td>TF-IDF</td><td class="num">0.6211</td><td class="num">0.6633</td><td class="num">0.7550</td><td class="num">0.6672</td><td class="num">0.7212</td><td class="num">0.6845</td></tr>
+        <tr><td>SVM</td><td>Word2Vec-CBOW</td><td class="num">0.6602</td><td class="num">0.7594</td><td class="num">0.7321</td><td class="num">0.6287</td><td class="num">0.6705</td><td class="num">0.6284</td></tr>
+        <tr><td>Logistic regression</td><td>Word2Vec-CBOW</td><td class="num">0.6624</td><td class="num">0.7583</td><td class="num">0.7344</td><td class="num">0.6250</td><td class="num">0.6584</td><td class="num">0.6243</td></tr>
+        <tr><td>Random forest</td><td>Word2Vec-CBOW</td><td class="num">0.6590</td><td class="num">0.7517</td><td class="num">0.7204</td><td class="num">0.6456</td><td class="num">0.6554</td><td class="num">0.6485</td></tr>
+        <tr><td>SVM</td><td>FastText</td><td class="num">0.6904</td><td class="num">0.7614</td><td class="num">0.7613</td><td class="num">0.5839</td><td class="num">0.6724</td><td class="num">0.5690</td></tr>
+        <tr><td>Logistic regression</td><td>FastText</td><td class="num">0.6804</td><td class="num">0.7554</td><td class="num">0.7607</td><td class="num">0.5823</td><td class="num">0.6710</td><td class="num">0.5688</td></tr>
+        <tr><td>Random forest</td><td>FastText</td><td class="num">0.5990</td><td class="num">0.7032</td><td class="num">0.7155</td><td class="num">0.7415</td><td class="num">0.7700</td><td class="num">0.6024</td></tr>
+        <tr><td rowspan="6">Sequence</td><td>LSTM</td><td>Random</td><td class="num">0.6369</td><td class="num">0.7486</td><td class="num">0.6350</td><td class="num">0.5450</td><td class="num">0.6335</td><td class="num">0.4612</td></tr>
+        <tr><td>LSTM</td><td>Word2Vec-CBOW</td><td class="num">0.6490</td><td class="num">0.7550</td><td class="num">0.6191</td><td class="num">0.6566</td><td class="num">0.6316</td><td class="num">0.5171</td></tr>
+        <tr><td>LSTM</td><td>FastText</td><td class="num">0.6388</td><td class="num">0.7317</td><td class="num">0.5720</td><td class="num">0.6353</td><td class="num">0.6996</td><td class="num">0.7030</td></tr>
+        <tr><td>Bi-LSTM</td><td>Random</td><td class="num">0.6211</td><td class="num">0.7780</td><td class="num">0.6506</td><td class="num">0.7358</td><td class="num">0.7129</td><td class="num">0.5747</td></tr>
+        <tr><td>Bi-LSTM</td><td>Word2Vec-CBOW</td><td class="num">0.6569</td><td class="num">0.8048</td><td class="num">0.6319</td><td class="num">0.4983</td><td class="num">0.5994</td><td class="num">0.5842</td></tr>
+        <tr><td>Bi-LSTM</td><td>FastText</td><td class="num">0.6434</td><td class="num">0.7641</td><td class="num">0.6454</td><td class="num">0.6391</td><td class="num">0.6840</td><td class="num">0.5299</td></tr>
+        <tr class="ours"><td rowspan="3">Transformer</td><td>AraBERTv2</td><td>Contextual</td><td class="num">0.7356</td><td class="num">0.8319</td><td class="num">0.6582</td><td class="num"><b>0.9433</b></td><td class="num">0.9070</td><td class="num">0.9099</td></tr>
+        <tr class="ours"><td>MARBERTv2</td><td>Contextual</td><td class="num">0.7195</td><td class="num"><b>0.8364</b></td><td class="num">0.6845</td><td class="num">0.9079</td><td class="num">0.8823</td><td class="num">0.9095</td></tr>
+        <tr class="ours"><td>CAMeLBERT</td><td>Contextual</td><td class="num">0.7461</td><td class="num">0.7760</td><td class="num">0.7206</td><td class="num">0.9090</td><td class="num">0.8753</td><td class="num">0.8372</td></tr>
+      </tbody>
+    </table>
+    <p class="note">Cross-platform scores are consistently below in-domain scores. Manual preprocessing improved Twitter/X&rarr;YouTube transfer for every evaluated configuration, while the original view was strongest in-domain &mdash; preprocessing choice therefore depends on the intended deployment setting.</p>
+  </div>
+
+  <h3>Hypothesis outcomes</h3>
+  <ul class="outcomes">
+    <li><span class="tag ok">Supported</span><span><b>H1.</b> Fine-tuned contextual Arabic transformers were the strongest model family on both platforms. This does not establish superiority across other datasets or training runs.</span></li>
+    <li><span class="tag mix">Partly supported</span><span><b>H2.</b> Preprocessing had an effect, but it was not consistent across platforms or model families, and no single preprocessing view prevailed in all contexts.</span></li>
+    <li><span class="tag ok">Supported</span><span><b>H3.</b> Cross-platform performance was consistently lower than in-domain performance, confirming that generalization across platforms remains difficult.</span></li>
+  </ul>
+
+  <div class="callout">
+    <p><b>Scope.</b> The conclusions should be interpreted within the scope of the present design, which is limited to two platforms and a controlled synthetic generation setup. The two corpora were built independently, at different times and with different generators, so platform and generator vary together; the transfer results describe transferability across independently constructed datasets rather than isolating platform effects.</p>
+    <p>All experiments used a single random seed, and bootstrap intervals reflect test-sample uncertainty rather than training-run variability. Exact-text removal cannot rule out overlap between human texts and their generated counterparts, because pair-level separation could not be verified. The study does not test newer generators, temporal drift, or broader cross-domain shifts beyond Twitter and YouTube.</p>
+  </div>
+</section>
+
+<section id="citation">
+  <h2>Citation</h2>
+  <div class="bibtex">
+    <button class="copy-btn" type="button" id="copy-bibtex">Copy BibTeX</button>
+<pre id="bibtex-text">@misc{alqahtani2026arabic,
+  title         = {Arabic Deepfake Text Detection on Social Media: Controlled
+                   Preprocessing and Cross-Platform Transferability},
+  author        = {Alqahtani, Abdulaziz and Sunba, Amal and Helmy, Tarek},
+  year          = {2026},
+  howpublished  = {\url{https://github.com/pr-Abdulaziz/Arabic-deepfake-detection}}
+}</pre>
+  </div>
+  <p class="note">A preprint record is not yet available. This entry will be replaced with the arXiv reference, including its DOI, once the preprint is posted.</p>
+</section>
+
+</main>
+
+<footer>
+  <p>Data availability: the datasets were developed in a prior project by members of the same research group and are not redistributed here. Model checkpoints are not yet published. The experiment code is available in the <a href="https://github.com/pr-Abdulaziz/Arabic-deepfake-detection">GitHub repository</a>.</p>
+  <p>The Hugging Face logo is a trademark of Hugging Face, Inc.</p>
+  <p class="copyright">Copyright &copy; 2026 Abdulaziz Alqahtani, Amal Sunba and Tarek Helmy. All rights reserved. The text, figures and tables on this page may not be copied or republished without written permission.</p>
+</footer>
+
+<script>
+document.getElementById('copy-bibtex').addEventListener('click', function () {
+  var text = document.getElementById('bibtex-text').textContent;
+  var btn = this;
+  function done() { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy BibTeX'; }, 1600); }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done, function () { btn.textContent = 'Press Ctrl+C'; });
+  } else {
+    var ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); done(); } catch (e) { btn.textContent = 'Press Ctrl+C'; }
+    document.body.removeChild(ta);
+  }
+});
+</script>
+
+</body>
+</html>
