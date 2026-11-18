@@ -1,6 +1,8 @@
 # Arabic Deepfake Text Detection
 
-[Project page](https://pr-abdulaziz.github.io/Arabic-deepfake-detection/) · [Notebook guide](NOTEBOOK_GUIDE.md) · [Citation](#citation) · [License and copyright](#license-and-copyright)
+[Notebook guide](NOTEBOOK_GUIDE.md) · [Citation](#citation) · [License and copyright](#license-and-copyright)
+
+> The project page is offline until the paper is published. Its source is kept in [`site/`](site/) and the deployment workflow is disabled; both can be restored without rebuilding anything.
 
 Research code for comparing text representations, model families, and preprocessing choices for Arabic human-versus-generated text classification on Twitter/X and YouTube. Experiments include in-domain evaluation and bidirectional cross-platform transfer.
 
