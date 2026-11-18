@@ -1,21 +1,46 @@
-MIT License
+Copyright (c) 2026 Abdulaziz Alqahtani, Amal Sunba and Tarek Helmy.
+All rights reserved.
 
-Copyright (c) 2026 Abdulaziz Alqahtani
+COVERED WORK
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+This notice covers the authors' own work in this repository and in the
+associated project page, including:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+  - the research code, notebooks and helper modules authored for this project;
+  - the project page under site/ (its markup, stylesheet and layout);
+  - the paper text, figures and tables reproduced on that page.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+THIRD-PARTY MATERIAL IS NOT COVERED
+
+Material created by others keeps its own terms and is not licensed by this
+notice. See THIRD_PARTY_NOTICES.md. Pretrained models, datasets and software
+dependencies referenced or loaded by this code remain subject to the licences
+and terms of their respective providers.
+
+NO PERMISSION TO COPY OR REPUBLISH
+
+No permission is granted to copy, redistribute, republish, mirror, relicense or
+create derivative works from the covered work, in whole or in part, without the
+prior written permission of the authors.
+
+WHAT IS ALLOWED
+
+  - Viewing this repository and using GitHub's own features, including forking,
+    under GitHub's Terms of Service.
+  - Citing this work in academic or professional writing (see CITATION.cff).
+  - Uses permitted by applicable law without a licence, such as fair use,
+    fair dealing, quotation and other statutory exceptions.
+
+HOW TO ASK FOR PERMISSION
+
+Open an issue in this repository, or contact the corresponding author through
+the contact details published with the paper.
+
+NO WARRANTY
+
+THE COVERED WORK IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+OUT OF OR IN CONNECTION WITH THE COVERED WORK OR ITS USE OR OTHER DEALINGS.

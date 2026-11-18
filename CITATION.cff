@@ -1,0 +1,43 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "Arabic Deepfake Text Detection on Social Media: Controlled Preprocessing and Cross-Platform Transferability"
+abstract: >-
+  Research code for a controlled cross-platform study of Arabic deepfake text
+  detection on Twitter/X and YouTube, comparing machine learning, sequence and
+  transformer models under three preprocessing views, in-domain and under
+  bidirectional cross-platform transfer.
+type: software
+authors:
+  - family-names: Alqahtani
+    given-names: Abdulaziz
+    affiliation: "Information and Computer Science Department, Interdisciplinary Research Center for Intelligent Secure Systems, King Fahd University of Petroleum and Minerals, Saudi Arabia"
+  - family-names: Sunba
+    given-names: Amal
+    affiliation: "Department of Computer Sciences, College of Computer and Information Sciences, Princess Nourah Bint Abdulrahman University, Riyadh, Saudi Arabia"
+  - family-names: Helmy
+    given-names: Tarek
+    affiliation: "Information and Computer Science Department, Interdisciplinary Research Center for Intelligent Secure Systems, King Fahd University of Petroleum and Minerals, Saudi Arabia"
+repository-code: "https://github.com/pr-Abdulaziz/Arabic-deepfake-detection"
+year: 2026
+keywords:
+  - Arabic deepfake detection
+  - machine-generated text detection
+  - cross-platform detection
+  - text preprocessing
+  - social media
+  - transformers
+preferred-citation:
+  type: generic
+  title: "Arabic Deepfake Text Detection on Social Media: Controlled Preprocessing and Cross-Platform Transferability"
+  authors:
+    - family-names: Alqahtani
+      given-names: Abdulaziz
+    - family-names: Sunba
+      given-names: Amal
+    - family-names: Helmy
+      given-names: Tarek
+  year: 2026
+  url: "https://github.com/pr-Abdulaziz/Arabic-deepfake-detection"
+  notes: >-
+    A preprint record is not yet available. This entry will be replaced with the
+    arXiv reference, including its DOI, once the preprint is posted.

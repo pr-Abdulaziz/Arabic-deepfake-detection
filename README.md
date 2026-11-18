@@ -1,5 +1,7 @@
 # Arabic Deepfake Text Detection
 
+[Project page](https://pr-abdulaziz.github.io/Arabic-deepfake-detection/) · [Notebook guide](NOTEBOOK_GUIDE.md) · [Citation](#citation) · [License and copyright](#license-and-copyright)
+
 Research code for comparing text representations, model families, and preprocessing choices for Arabic human-versus-generated text classification on Twitter/X and YouTube. Experiments include in-domain evaluation and bidirectional cross-platform transfer.
 
 Here, **deepfake text** refers to generated rewrites using deceptive strategies. The classifiers predict human versus generated text; they do not independently verify whether a statement is true.
@@ -188,6 +190,28 @@ Before staging, use `python scripts/check_public_release.py --worktree` to check
 
 For bounded publication-rule tests without training, run `python scripts/test_public_release.py`. These do not reproduce full experimental results. Also review any existing Git history before pushing: cleaning the working files does not remove historical notebook outputs. No automated check can guarantee that notebook source contains no sensitive data.
 
-## License
+## Citation
 
-Repository code is provided under the [MIT License](LICENSE). Dataset access and third-party model or document licenses are separate.
+If you use this work, please cite it. GitHub's "Cite this repository" button reads [CITATION.cff](CITATION.cff).
+
+```bibtex
+@misc{alqahtani2026arabic,
+  title         = {Arabic Deepfake Text Detection on Social Media: Controlled
+                   Preprocessing and Cross-Platform Transferability},
+  author        = {Alqahtani, Abdulaziz and Sunba, Amal and Helmy, Tarek},
+  year          = {2026},
+  howpublished  = {\url{https://github.com/pr-Abdulaziz/Arabic-deepfake-detection}}
+}
+```
+
+A preprint record is not yet available. This entry will be replaced with the arXiv reference, including its DOI, once the preprint is posted.
+
+## License and copyright
+
+Copyright © 2026 Abdulaziz Alqahtani, Amal Sunba and Tarek Helmy. All rights reserved.
+
+The authors' own work in this repository — the research code and notebooks, the project page under `site/`, and the paper text, figures and tables reproduced on it — may not be copied, redistributed or republished without written permission. Viewing and forking on GitHub under GitHub's Terms of Service, citing the work, and uses permitted by law such as fair use remain allowed. See [LICENSE](LICENSE) for the full terms and how to request permission.
+
+Third-party material keeps its own terms and is not covered: see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). The Hugging Face logo is a trademark of Hugging Face, Inc. Dataset access and third-party model licenses are separate.
+
+> Earlier commits of this repository carried an MIT license. Copies obtained under those terms are unaffected; this notice applies going forward.
